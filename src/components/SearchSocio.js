@@ -5,6 +5,7 @@ import Socio from "./Socio.js";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 
 class SearchSocio extends Component {
@@ -42,13 +43,13 @@ class SearchSocio extends Component {
       .catch(err => {
         this.setState({
           errors: err.response.data,
+          socio: null,
           loading: false
         });
       });
   };
   render() {
-    console.log(this.state);
-    const { errors, loading } = this.state;
+    const { socioId, socio, errors, loading } = this.state;
     return (
       <Grid container className="form">
         <Grid item sm />
@@ -63,17 +64,23 @@ class SearchSocio extends Component {
               margin="normal"
               helperText={errors.socioID}
               error={errors.socioID ? true : false}
-              value={this.state.socioId !== 0 ? this.state.socioId : ""}
+              value={socioId !== 0 ? socioId : ""}
               onChange={this.handleChange}
             />
             <br />
             <br />
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={loading}
+            >
               Buscar
+              {loading && <CircularProgress size={30} className="progress" />}
             </Button>
             <br />
             <br />
-            {this.state.socio ? <Socio socio={this.state.socio} /> : null}
+            {socio ? <Socio socio={socio} /> : null}
           </form>
         </Grid>
         <Grid item sm />

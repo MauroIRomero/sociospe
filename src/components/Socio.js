@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography";
 
 class Socio extends Component {
   render() {
-    console.log(this.props.socio);
     return (
       <Card>
         <CardContent>
